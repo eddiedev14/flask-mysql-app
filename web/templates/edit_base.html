@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Edit{% endblock %}
+{% block navbar_title %}Edit{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>{% block edit_heading %}Edit{% endblock %}</h2>
+    <a href="{% block back_url %}/{% endblock %}" class="btn btn-primary mb-3">Back</a>
+
+    <form id="edit-form">
+        {% block form_fields %}{% endblock %}
+        <button type="button" class="btn btn-primary" onclick="{% block save_action %}{% endblock %}">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

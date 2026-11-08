@@ -1,0 +1,28 @@
+{% extends "edit_base.html" %}
+
+{% block title %}Edit Product{% endblock %}
+{% block navbar_title %}Product Management{% endblock %}
+{% block edit_heading %}Edit Product{% endblock %}
+{% block back_url %}/dashboard_products{% endblock %}
+{% block save_action %}updateProduct(){% endblock %}
+
+{% block form_fields %}
+<input type="hidden" id="product-id">
+<div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" required>
+</div>
+<div class="form-group">
+    <label for="stock">Stock</label>
+    <input type="number" class="form-control" id="stock" required>
+</div>
+<div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" step="0.01" class="form-control" id="price" required>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='script_products.js') }}"></script>
+<script>loadProduct({{ id }});</script>
+{% endblock %}

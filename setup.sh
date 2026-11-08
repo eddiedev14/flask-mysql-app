@@ -18,6 +18,10 @@ sudo systemctl start mysql.service
 echo "Creating and filling database"
 sudo mysql -h localhost -u root -proot < "$REPO_DIR/init.sql"
 
+# MySQL se deja escuchando solo en localhost (127.0.0.1), ya que
+# la BD solo debe ser accesible desde esta misma instancia (la app
+# Flask corre aquí y se conecta vía localhost).
+
 # Install Python build deps and venv tooling
 sudo apt install python3-dev default-libmysqlclient-dev build-essential pkg-config mysql-client python3-pip python3-venv python3-full -y
 
@@ -31,8 +35,16 @@ python3 -m venv "$VENV_DIR"
 "$VENV_DIR/bin/pip" install Flask-MySQLdb
 "$VENV_DIR/bin/pip" install Flask-SQLAlchemy
 
-echo "Listo. Para correr la app:"
-echo "  cd $REPO_DIR/webapp"
-echo "  source $VENV_DIR/bin/activate"
-echo "  export FLASK_APP=run.py"
-echo "  flask run --host=0.0.0.0"
+echo ""
+echo "=================================================="
+echo "  Instalación completa"
+echo "=================================================="
+echo ""
+echo "  Para correr la app, ejecuta en orden:"
+echo ""
+echo "    cd web"
+echo "    source ../venv/bin/activate"
+echo "    export FLASK_APP=run.py"
+echo "    flask run --host=0.0.0.0"
+echo ""
+echo "=================================================="

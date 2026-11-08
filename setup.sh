@@ -18,19 +18,21 @@ sudo systemctl start mysql.service
 echo "Creating and filling database"
 sudo mysql -h localhost -u root -proot < "$REPO_DIR/init.sql"
 
-# Adding permissions to remote access
-echo "Adding permissions to remote access"
-sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
-sudo systemctl restart mysql.service
+# Install Python build deps and venv tooling
+sudo apt install python3-dev default-libmysqlclient-dev build-essential pkg-config mysql-client python3-pip python3-venv python3-full -y
 
-# Install Python Flask and Flask-MySQLdb
-sudo apt install python3-dev default-libmysqlclient-dev build-essential pkg-config mysql-client python3-pip -y
-pip3 install Flask==2.3.3
-pip3 install flask-cors
-pip3 install Flask-MySQLdb
-pip3 install Flask-SQLAlchemy
+# Create and populate a virtual environment (required on externally-managed Python installs)
+VENV_DIR="$REPO_DIR/venv"
+python3 -m venv "$VENV_DIR"
+
+"$VENV_DIR/bin/pip" install --upgrade pip
+"$VENV_DIR/bin/pip" install Flask==2.3.3
+"$VENV_DIR/bin/pip" install flask-cors
+"$VENV_DIR/bin/pip" install Flask-MySQLdb
+"$VENV_DIR/bin/pip" install Flask-SQLAlchemy
 
 echo "Listo. Para correr la app:"
 echo "  cd $REPO_DIR/webapp"
+echo "  source $VENV_DIR/bin/activate"
 echo "  export FLASK_APP=run.py"
-echo "  python3 -m flask run --host=0.0.0.0"
+echo "  flask run --host=0.0.0.0"
